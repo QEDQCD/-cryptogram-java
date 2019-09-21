@@ -11,7 +11,7 @@ import java.util.Base64;
 import java.util.*;
  
 
-public class AESEncryptUtil {
+public class AEScode {
  
     public static final String CHARSET = "UTF-8";
  
