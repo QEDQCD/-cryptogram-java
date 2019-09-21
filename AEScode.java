@@ -35,13 +35,13 @@ public class AESEncryptUtil {
         if (isEncrypt) {
             byte[] encodeByte = encryptOrDecrypt(Cipher.ENCRYPT_MODE, source, key, iv, type, encodeType);
  
-            //TODO ²âÊÔ´úÂë
+            //TODO æµ‹è¯•ä»£ç 
             //String encodeStr = TypeConvert.bytesToHexString(encodeByte);
             return encodeByte;
         } else {
             byte[] decodeByte = encryptOrDecrypt(Cipher.DECRYPT_MODE, source, key, iv, type, encodeType);
  
-            //TODO ²âÊÔ´úÂë
+            //TODO æµ‹è¯•ä»£ç 
             //String decodeStr = new String(decodeByte, CHARSET);
  
             return decodeByte;
@@ -51,25 +51,25 @@ public class AESEncryptUtil {
  
     private static byte[] encryptOrDecrypt(int mode, byte[] byteContent, byte[] key, byte[] iv, AESType type, String modeAndPadding) throws InvalidKeyException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
  
-//        // *****  ¶ÔÓÚÊÇ·ñ´æÔÚ1,2,3,4 ²½×à»¹´æÔÚÒÉ»ó
-//        //1.¹¹ÔìÃÜÔ¿Éú³ÉÆ÷£¬Ö¸¶¨ÎªAESËã·¨,²»Çø·Ö´óĞ¡Ğ´
+//        // *****  å¯¹äºæ˜¯å¦å­˜åœ¨1,2,3,4 æ­¥å¥è¿˜å­˜åœ¨ç–‘æƒ‘
+//        //1.æ„é€ å¯†é’¥ç”Ÿæˆå™¨ï¼ŒæŒ‡å®šä¸ºAESç®—æ³•,ä¸åŒºåˆ†å¤§å°å†™
 //        KeyGenerator keygen=KeyGenerator.getInstance("AES");
-//        //2.¸ù¾İecnodeRules¹æÔò³õÊ¼»¯ÃÜÔ¿Éú³ÉÆ÷
-//        //Éú³ÉÒ»¸öÖ¸¶¨Î»µÄËæ»úÔ´,¸ù¾İ´«ÈëµÄ×Ö½ÚÊı×é
+//        //2.æ ¹æ®ecnodeRulesè§„åˆ™åˆå§‹åŒ–å¯†é’¥ç”Ÿæˆå™¨
+//        //ç”Ÿæˆä¸€ä¸ªæŒ‡å®šä½çš„éšæœºæº,æ ¹æ®ä¼ å…¥çš„å­—èŠ‚æ•°ç»„
 //        keygen.init(type.getValue(), new SecureRandom(key));
-//        //3.²úÉúÔ­Ê¼¶Ô³ÆÃÜÔ¿
+//        //3.äº§ç”ŸåŸå§‹å¯¹ç§°å¯†é’¥
 //        SecretKey secretKey=keygen.generateKey();
-//        //4.»ñµÃÔ­Ê¼¶Ô³ÆÃÜÔ¿µÄ×Ö½ÚÊı×é
+//        //4.è·å¾—åŸå§‹å¯¹ç§°å¯†é’¥çš„å­—èŠ‚æ•°ç»„
 //        byte [] raw = secretKey.getEncoded();
  
-       //5.¸ù¾İ×Ö½ÚÊı×éÉú³ÉAESÃÜÔ¿
+       //5.æ ¹æ®å­—èŠ‚æ•°ç»„ç”ŸæˆAESå¯†é’¥
         SecretKey keySpec=new SecretKeySpec(key, "AES");
  
-        //6.¸ù¾İÖ¸¶¨Ëã·¨AES×Ô³ÉÃÜÂëÆ÷
-        Cipher cipher = Cipher.getInstance(modeAndPadding);// ´´½¨ÃÜÂëÆ÷
+        //6.æ ¹æ®æŒ‡å®šç®—æ³•AESè‡ªæˆå¯†ç å™¨
+        Cipher cipher = Cipher.getInstance(modeAndPadding);// åˆ›å»ºå¯†ç å™¨
  
         if (null != iv) {
-            //Ö¸¶¨Ò»¸ö³õÊ¼»¯ÏòÁ¿ (Initialization vector£¬IV)£¬ IV ±ØĞëÊÇ16Î»
+            //æŒ‡å®šä¸€ä¸ªåˆå§‹åŒ–å‘é‡ (Initialization vectorï¼ŒIV)ï¼Œ IV å¿…é¡»æ˜¯16ä½
             cipher.init(mode, keySpec, new IvParameterSpec(iv));
         } else {
             cipher.init(mode, keySpec);
@@ -80,7 +80,7 @@ public class AESEncryptUtil {
  
  
     /**
-     * Ö¸¶¨Ò»¸ö³õÊ¼»¯ÏòÁ¿ (Initialization vector£¬IV)£¬IV ±ØĞëÊÇ16Î»
+     * æŒ‡å®šä¸€ä¸ªåˆå§‹åŒ–å‘é‡ (Initialization vectorï¼ŒIV)ï¼ŒIV å¿…é¡»æ˜¯16ä½
      */
     public static final byte[] getIV() throws Exception {
         return "1234567812345678".getBytes(CHARSET);
