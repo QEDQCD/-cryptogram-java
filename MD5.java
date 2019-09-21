@@ -12,7 +12,7 @@ public class MD5 {
      private static final Integer SALT_LENGTH = 12;
 
      /** 
-     * ½«16½øÖÆ×Ö·û´®×ª»»³É×Ö½ÚÊı×é 
+     * å°†16è¿›åˆ¶å­—ç¬¦ä¸²è½¬æ¢æˆå­—èŠ‚æ•°ç»„ 
      * @param hex 
      * @return 
      */
@@ -30,7 +30,7 @@ public class MD5 {
 
 
      /**
-     * ½«Ö¸¶¨byteÊı×é×ª»»³É16½øÖÆ×Ö·û´®
+     * å°†æŒ‡å®šbyteæ•°ç»„è½¬æ¢æˆ16è¿›åˆ¶å­—ç¬¦ä¸²
      * @param b
      * @return
      */
@@ -47,7 +47,7 @@ public class MD5 {
      }
 
      /**
-     * ÑéÖ¤¿ÚÁîÊÇ·ñºÏ·¨
+     * éªŒè¯å£ä»¤æ˜¯å¦åˆæ³•
      * @param password
      * @param passwordInDb
      * @return
@@ -56,37 +56,37 @@ public class MD5 {
      */
      public static boolean validPassword(String password, String passwordInDb)
      throws NoSuchAlgorithmException, UnsupportedEncodingException {
-     //½«16½øÖÆ×Ö·û´®¸ñÊ½¿ÚÁî×ª»»³É×Ö½ÚÊı×é
+     //å°†16è¿›åˆ¶å­—ç¬¦ä¸²æ ¼å¼å£ä»¤è½¬æ¢æˆå­—èŠ‚æ•°ç»„
      byte[] pwdInDb = hexStringToByte(passwordInDb);
-     //ÉùÃ÷ÑÎ±äÁ¿
+     //å£°æ˜å˜é‡
      byte[] salt = new byte[SALT_LENGTH];
-     //½«ÑÎ´ÓÊı¾İ¿âÖĞ±£´æµÄ¿ÚÁî×Ö½ÚÊı×éÖĞÌáÈ¡³öÀ´
+     //å°†ä»æ•°æ®åº“ä¸­ä¿å­˜çš„å£ä»¤å­—èŠ‚æ•°ç»„ä¸­æå–å‡ºæ¥
      System.arraycopy(pwdInDb, 0, salt, 0, SALT_LENGTH);
-     //´´½¨ÏûÏ¢ÕªÒª¶ÔÏó
+     //åˆ›å»ºæ¶ˆæ¯æ‘˜è¦å¯¹è±¡
      MessageDigest md = MessageDigest.getInstance("MD5");
-     //½«ÑÎÊı¾İ´«ÈëÏûÏ¢ÕªÒª¶ÔÏó
+     //å°†ç›æ•°æ®ä¼ å…¥æ¶ˆæ¯æ‘˜è¦å¯¹è±¡
      md.update(salt);
-     //½«¿ÚÁîµÄÊı¾İ´«¸øÏûÏ¢ÕªÒª¶ÔÏó
+     //å°†å£ä»¤çš„æ•°æ®ä¼ ç»™æ¶ˆæ¯æ‘˜è¦å¯¹è±¡
      md.update(password.getBytes("UTF-8"));
-     //Éú³ÉÊäÈë¿ÚÁîµÄÏûÏ¢ÕªÒª
+     //ç”Ÿæˆè¾“å…¥å£ä»¤çš„æ¶ˆæ¯æ‘˜è¦
      byte[] digest = md.digest();
-     //ÉùÃ÷Ò»¸ö±£´æÊı¾İ¿âÖĞ¿ÚÁîÏûÏ¢ÕªÒªµÄ±äÁ¿
+     //å£°æ˜ä¸€ä¸ªä¿å­˜æ•°æ®åº“ä¸­å£ä»¤æ¶ˆæ¯æ‘˜è¦çš„å˜é‡
      byte[] digestInDb = new byte[pwdInDb.length - SALT_LENGTH];
-     //È¡µÃÊı¾İ¿âÖĞ¿ÚÁîµÄÏûÏ¢ÕªÒª
+     //å–å¾—æ•°æ®åº“ä¸­å£ä»¤çš„æ¶ˆæ¯æ‘˜è¦
      System.arraycopy(pwdInDb, SALT_LENGTH, digestInDb, 0, digestInDb.length);
-     //±È½Ï¸ù¾İÊäÈë¿ÚÁîÉú³ÉµÄÏûÏ¢ÕªÒªºÍÊı¾İ¿âÖĞÏûÏ¢ÕªÒªÊÇ·ñÏàÍ¬
+     //æ¯”è¾ƒæ ¹æ®è¾“å…¥å£ä»¤ç”Ÿæˆçš„æ¶ˆæ¯æ‘˜è¦å’Œæ•°æ®åº“ä¸­æ¶ˆæ¯æ‘˜è¦æ˜¯å¦ç›¸åŒ
      if (Arrays.equals(digest, digestInDb)) {
-     //¿ÚÁîÕıÈ··µ»Ø¿ÚÁîÆ¥ÅäÏûÏ¢
+     //å£ä»¤æ­£ç¡®è¿”å›å£ä»¤åŒ¹é…æ¶ˆæ¯
      return true;
      } else {
-     //¿ÚÁî²»ÕıÈ··µ»Ø¿ÚÁî²»Æ¥ÅäÏûÏ¢
+     //å£ä»¤ä¸æ­£ç¡®è¿”å›å£ä»¤ä¸åŒ¹é…æ¶ˆæ¯
      return false;
      }
      }
 
 
      /**
-     * »ñµÃ¼ÓÃÜºóµÄ16½øÖÆĞÎÊ½¿ÚÁî
+     * è·å¾—åŠ å¯†åçš„16è¿›åˆ¶å½¢å¼å£ä»¤
      * @param password
      * @return
      * @throws NoSuchAlgorithmException
@@ -94,33 +94,33 @@ public class MD5 {
      */
      public static String getEncryptedPwd(String password)
      throws NoSuchAlgorithmException, UnsupportedEncodingException {
-     //ÉùÃ÷¼ÓÃÜºóµÄ¿ÚÁîÊı×é±äÁ¿
+     //å£°æ˜åŠ å¯†åçš„å£ä»¤æ•°ç»„å˜é‡
      byte[] pwd = null;
-     //Ëæ»úÊıÉú³ÉÆ÷
+     //éšæœºæ•°ç”Ÿæˆå™¨
      SecureRandom random = new SecureRandom();
-     //ÉùÃ÷ÑÎÊı×é±äÁ¿
+     //å£°æ˜ç›æ•°ç»„å˜é‡
      byte[] salt = new byte[SALT_LENGTH];
-     //½«Ëæ»úÊı·ÅÈëÑÎ±äÁ¿ÖĞ
+     //å°†éšæœºæ•°æ”¾å…¥ç›å˜é‡ä¸­
      random.nextBytes(salt);
 
-     //ÉùÃ÷ÏûÏ¢ÕªÒª¶ÔÏó
+     //å£°æ˜æ¶ˆæ¯æ‘˜è¦å¯¹è±¡
      MessageDigest md = null;
-     //´´½¨ÏûÏ¢ÕªÒª
+     //åˆ›å»ºæ¶ˆæ¯æ‘˜è¦
      md = MessageDigest.getInstance("MD5");
-     //½«ÑÎÊı¾İ´«ÈëÏûÏ¢ÕªÒª¶ÔÏó
+     //å°†ç›æ•°æ®ä¼ å…¥æ¶ˆæ¯æ‘˜è¦å¯¹è±¡
      md.update(salt);
-     //½«¿ÚÁîµÄÊı¾İ´«¸øÏûÏ¢ÕªÒª¶ÔÏó
+     //å°†å£ä»¤çš„æ•°æ®ä¼ ç»™æ¶ˆæ¯æ‘˜è¦å¯¹è±¡
      md.update(password.getBytes("UTF-8"));
-     //»ñµÃÏûÏ¢ÕªÒªµÄ×Ö½ÚÊı×é
+     //è·å¾—æ¶ˆæ¯æ‘˜è¦çš„å­—èŠ‚æ•°ç»„
      byte[] digest = md.digest();
 
-     //ÒòÎªÒªÔÚ¿ÚÁîµÄ×Ö½ÚÊı×éÖĞ´æ·ÅÑÎ£¬ËùÒÔ¼ÓÉÏÑÎµÄ×Ö½Ú³¤¶È
+     //å› ä¸ºè¦åœ¨å£ä»¤çš„å­—èŠ‚æ•°ç»„ä¸­å­˜æ”¾ç›ï¼Œæ‰€ä»¥åŠ ä¸Šç›çš„å­—èŠ‚é•¿åº¦
      pwd = new byte[digest.length + SALT_LENGTH];
-     //½«ÑÎµÄ×Ö½Ú¿½±´µ½Éú³ÉµÄ¼ÓÃÜ¿ÚÁî×Ö½ÚÊı×éµÄÇ°12¸ö×Ö½Ú£¬ÒÔ±ãÔÚÑéÖ¤¿ÚÁîÊ±È¡³öÑÎ
+     //å°†ç›çš„å­—èŠ‚æ‹·è´åˆ°ç”Ÿæˆçš„åŠ å¯†å£ä»¤å­—èŠ‚æ•°ç»„çš„å‰12ä¸ªå­—èŠ‚ï¼Œä»¥ä¾¿åœ¨éªŒè¯å£ä»¤æ—¶å–å‡ºç›
      System.arraycopy(salt, 0, pwd, 0, SALT_LENGTH);
-     //½«ÏûÏ¢ÕªÒª¿½±´µ½¼ÓÃÜ¿ÚÁî×Ö½ÚÊı×é´ÓµÚ13¸ö×Ö½Ú¿ªÊ¼µÄ×Ö½Ú
+     //å°†æ¶ˆæ¯æ‘˜è¦æ‹·è´åˆ°åŠ å¯†å£ä»¤å­—èŠ‚æ•°ç»„ä»ç¬¬13ä¸ªå­—èŠ‚å¼€å§‹çš„å­—èŠ‚
      System.arraycopy(digest, 0, pwd, SALT_LENGTH, digest.length);
-     //½«×Ö½ÚÊı×é¸ñÊ½¼ÓÃÜºóµÄ¿ÚÁî×ª»¯Îª16½øÖÆ×Ö·û´®¸ñÊ½µÄ¿ÚÁî
+     //å°†å­—èŠ‚æ•°ç»„æ ¼å¼åŠ å¯†åçš„å£ä»¤è½¬åŒ–ä¸º16è¿›åˆ¶å­—ç¬¦ä¸²æ ¼å¼çš„å£ä»¤
      return byteToHexString(pwd);
      }
     }
