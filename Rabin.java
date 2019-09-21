@@ -2,7 +2,7 @@ package crypto;
 
 import java.util.*;
 public class Rabin{
-public static int isPrimeNumber(int number){ //ÅĞ¶ÏÊÇ·ñÎªËØÊı
+public static int isPrimeNumber(int number){ //åˆ¤æ–­æ˜¯å¦ä¸ºç´ æ•°
 double num=(double)number;
 int n=(int)Math.sqrt(num);
 int sign=2;
@@ -17,25 +17,25 @@ else
 return 0;
 }
 
-public static int isMode(int number){    //ÅĞ¶Ï½á¹ûÊÇ·ñÄ£4Óà3
+public static int isMode(int number){    //åˆ¤æ–­ç»“æœæ˜¯å¦æ¨¡4ä½™3
 if(number%4==3)
 return 1;
 else
 return 0;
 }
 
-public static int PrimeNumberTest(int max,int min){   //ÔÚmaxÓëmin·¶Î§ÄÚ²úÉúËæ»úÊı
+public static int PrimeNumberTest(int max,int min){   //åœ¨maxä¸minèŒƒå›´å†…äº§ç”Ÿéšæœºæ•°
 Random rand=new Random();
 int m=rand.nextInt(max)%(max-min+1)+min;
 //	int m=(int)Math.rint(Math.random()*(max-min)+min);
-int judge1=isPrimeNumber(m);  //ÅĞ¶ÏÊÇ·ñÊÇËØÊı
+int judge1=isPrimeNumber(m);  //åˆ¤æ–­æ˜¯å¦æ˜¯ç´ æ•°
 if(judge1==0){
 int p=max;
 int q=min;
 return PrimeNumberTest(p,q);
 }
 
-int judge2=isMode(m);//ÅĞ¶ÏÊÇ·ñÄ£4Óà3
+int judge2=isMode(m);//åˆ¤æ–­æ˜¯å¦æ¨¡4ä½™3
 if(judge2==0){
 int p=max;
 int q=min;
@@ -44,13 +44,13 @@ return PrimeNumberTest(p,q);
 return m;
 }
 
-public static int opposite(int a,int b){     //ÇóaÏà¶ÔÓÚbµÄÄæ
+public static int opposite(int a,int b){     //æ±‚aç›¸å¯¹äºbçš„é€†
 int i=0;
 while(a*(++i)%b!=1);
 return i;
 }
 
-public static int Deciphering(int b1,int b2,int m1,int m2){  //ÖĞ¹úÊ£Óà¶¨ÀíÇó½â
+public static int Deciphering(int b1,int b2,int m1,int m2){  //ä¸­å›½å‰©ä½™å®šç†æ±‚è§£
 int m=m1*m2;
 int M1=m2;
 int M2=m1;
@@ -61,7 +61,7 @@ return result;
 }
 
 public static void main(String[] args) throws Exception{ 
-System.out.println("ÇëÊäÈëĞèÒªËØÊıµÄËùÔÚÇø¼ä");
+System.out.println("è¯·è¾“å…¥éœ€è¦ç´ æ•°çš„æ‰€åœ¨åŒºé—´");
 Scanner input=new Scanner(System.in);
 int min=input.nextInt();
 int max=input.nextInt();
@@ -70,13 +70,13 @@ int max=input.nextInt();
     int q=PrimeNumberTest(max,min);
 //	int q=11;
 int n=p*q;
-System.out.println("ÇëÊäÈëÃ÷ÎÄÊı×Ö£º");
+System.out.println("è¯·è¾“å…¥æ˜æ–‡æ•°å­—ï¼š");
 int plaintext=input.nextInt();
 int encrytext=(plaintext*plaintext)%n;
-System.out.println("¼ÓÃÜÒÔºóµÄÃÜÎÄÎª£º");
+System.out.println("åŠ å¯†ä»¥åçš„å¯†æ–‡ä¸ºï¼š");
 System.out.println(encrytext);
-//½âÃÜµÄ¹ı³Ì
-System.out.println("½âÃÜºóÃ÷ÎÄËùÔÚµÄ¼¯ºÏÎª£º");
+//è§£å¯†çš„è¿‡ç¨‹
+System.out.println("è§£å¯†åæ˜æ–‡æ‰€åœ¨çš„é›†åˆä¸ºï¼š");
 int c1=0,c2=0;
 c1=(int)Math.pow(encrytext, (p+1)/4)%p;
 c2=(int)Math.pow(encrytext, (q+1)/4)%q;
@@ -95,7 +95,5 @@ c2=q-(int)Math.pow(encrytext, (q+1)/4)%q;
 int finaltext4=Deciphering(c1,c2,p,q);
 System.out.println(finaltext4);
 input.close();
-
-
 }
 }
