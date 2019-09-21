@@ -17,9 +17,11 @@ import java.util.HashMap;
 import java.util.Map; 
 
 import javax.crypto.Cipher; 
-
+import sun.security.ec.ECKeyFactory;
+import sun.security.ec.ECPrivateKeyImpl;
+import sun.security.ec.ECPublicKeyImpl;
 /** 
-* ECC°²È«±àÂë×é¼ş 
+* ECCå®‰å…¨ç¼–ç ç»„ä»¶ 
 * 
 */ 
 public abstract class ECCCoder extends Coder { 
@@ -29,8 +31,8 @@ private static final String PUBLIC_KEY = "ECCPublicKey";
 private static final String PRIVATE_KEY = "ECCPrivateKey"; 
 
 /** 
-* ½âÃÜ<br> 
-* ÓÃË½Ô¿½âÃÜ 
+* è§£å¯†<br> 
+* ç”¨ç§é’¥è§£å¯† 
 * 
 * @param data 
 * @param key 
@@ -38,10 +40,10 @@ private static final String PRIVATE_KEY = "ECCPrivateKey";
 * @throws Exception 
 */ 
 public static byte[] decrypt(byte[] data, String key) throws Exception { 
-// ¶ÔÃÜÔ¿½âÃÜ 
+// å¯¹å¯†é’¥è§£å¯† 
 byte[] keyBytes = decryptBASE64(key); 
 
-// È¡µÃË½Ô¿ 
+// å–å¾—ç§é’¥ 
 PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes); 
 KeyFactory keyFactory = ECKeyFactory.INSTANCE; 
 Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec); 
@@ -51,8 +53,8 @@ ECPrivateKey priKey = (ECPrivateKey) privateKey;
 ECPrivateKeySpec ecPrivateKeySpec = new ECPrivateKeySpec(priKey.getS(), 
 priKey.getParams()); 
 
-// ¶ÔÊı¾İ½âÃÜ 
-// TODO Chipher²»Ö§³ÖECËã·¨ Î´ÄÜÊµÏÖ 
+// å¯¹æ•°æ®è§£å¯† 
+// TODO Chipherä¸æ”¯æŒECç®—æ³• æœªèƒ½å®ç° 
 Cipher cipher = Cipher.getInstance(ALGORITHM, keyFactory.getProvider()); 
 cipher.init(Cipher.DECRYPT_MODE, priKey, ecPrivateKeySpec.getParams()); 
 
@@ -60,8 +62,8 @@ return cipher.doFinal(data);
 } 
 
 /** 
-* ¼ÓÃÜ<br> 
-* ÓÃ¹«Ô¿¼ÓÃÜ 
+* åŠ å¯†<br> 
+* ç”¨å…¬é’¥åŠ å¯† 
 * 
 * @param data 
 * @param privateKey 
@@ -70,10 +72,10 @@ return cipher.doFinal(data);
 */ 
 public static byte[] encrypt(byte[] data, String privateKey) 
 throws Exception { 
-// ¶Ô¹«Ô¿½âÃÜ 
+// å¯¹å…¬é’¥è§£å¯† 
 byte[] keyBytes = decryptBASE64(privateKey); 
 
-// È¡µÃ¹«Ô¿ 
+// å–å¾—å…¬é’¥ 
 X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(keyBytes); 
 KeyFactory keyFactory = ECKeyFactory.INSTANCE; 
 Key publicKey = keyFactory.generatePublic(x509KeySpec); 
@@ -83,8 +85,8 @@ ECPublicKey pubKey = (ECPublicKey) publicKey;
 ECPublicKeySpec ecPublicKeySpec = new ECPublicKeySpec(pubKey.getW(), 
 pubKey.getParams()); 
 
-// ¶ÔÊı¾İ¼ÓÃÜ 
-// TODO Chipher²»Ö§³ÖECËã·¨ Î´ÄÜÊµÏÖ 
+// å¯¹æ•°æ®åŠ å¯† 
+// TODO Chipherä¸æ”¯æŒECç®—æ³• æœªèƒ½å®ç° 
 Cipher cipher = Cipher.getInstance(ALGORITHM, keyFactory.getProvider()); 
 cipher.init(Cipher.ENCRYPT_MODE, pubKey, ecPublicKeySpec.getParams()); 
 
@@ -92,7 +94,7 @@ return cipher.doFinal(data);
 } 
 
 /** 
-* È¡µÃË½Ô¿ 
+* å–å¾—ç§é’¥ 
 * 
 * @param keyMap 
 * @return 
@@ -106,7 +108,7 @@ return encryptBASE64(key.getEncoded());
 } 
 
 /** 
-* È¡µÃ¹«Ô¿ 
+* å–å¾—å…¬é’¥ 
 * 
 * @param keyMap 
 * @return 
@@ -120,7 +122,7 @@ return encryptBASE64(key.getEncoded());
 } 
 
 /** 
-* ³õÊ¼»¯ÃÜÔ¿ 
+* åˆå§‹åŒ–å¯†é’¥ 
 * 
 * @return 
 * @throws Exception 
@@ -149,12 +151,12 @@ EllipticCurve ellipticCurve = new EllipticCurve(ecField, a, b);
 
 ECParameterSpec ecParameterSpec = new ECParameterSpec(ellipticCurve, g, 
 n, h); 
-// ¹«Ô¿ 
+// å…¬é’¥ 
 ECPublicKey publicKey = new ECPublicKeyImpl(g, ecParameterSpec); 
 
 BigInteger s = new BigInteger( 
 "1234006549323611672814741753598448348329118574063", 10); 
-// Ë½Ô¿ 
+// ç§é’¥ 
 ECPrivateKey privateKey = new ECPrivateKeyImpl(s, ecParameterSpec); 
 
 Map<String, Object> keyMap = new HashMap<String, Object>(2); 
