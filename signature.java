@@ -1,5 +1,4 @@
 package crypto;
-
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -8,18 +7,18 @@ public static void main(String args[]){
     String signString="Thank you!";
     String type="SHA-1";
     String result=sign(signString,type);
-    System.out.println("²ÉÓÃ"+type+"¼ÓÃÜÖ®ºóµÄ´®Îª£º"+result);
+    System.out.println("é‡‡ç”¨"+type+"åŠ å¯†ä¹‹åçš„ä¸²ä¸ºï¼š"+result);
     type="MD5";
     result=sign(signString,type);
-    System.out.println("²ÉÓÃ"+type+"¼ÓÃÜÖ®ºóµÄ´®Îª£º"+result);
+    System.out.println("é‡‡ç”¨"+type+"åŠ å¯†ä¹‹åçš„ä¸²ä¸ºï¼š"+result);
     type="SHA-256";
     result=sign(signString,type);
-    System.out.println("²ÉÓÃ"+type+"¼ÓÃÜÖ®ºóµÄ´®Îª£º"+result);
+    System.out.println("é‡‡ç”¨"+type+"åŠ å¯†ä¹‹åçš„ä¸²ä¸ºï¼š"+result);
     type="SHA-384";
     result=sign(signString,type);
-    System.out.println("²ÉÓÃ"+type+"¼ÓÃÜÖ®ºóµÄ´®Îª£º"+result);
+    System.out.println("é‡‡ç”¨"+type+"åŠ å¯†ä¹‹åçš„ä¸²ä¸ºï¼š"+result);
 }
-    //Ç©Ãû     
+    //ç­¾å     
         public static String sign(String str, String type){
            String s=Encrypt(str,type);
             return s;
@@ -33,7 +32,7 @@ public static void main(String args[]){
                 md.update(bt);
                 strDes = bytes2Hex(md.digest()); // to HexString
             } catch (NoSuchAlgorithmException e) {
-                System.out.println("Ç©ÃûÊ§°Ü£¡");
+                System.out.println("ç­¾åå¤±è´¥ï¼");
                 return null;
             }
             return strDes;
